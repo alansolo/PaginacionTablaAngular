@@ -1,0 +1,44 @@
+﻿!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/ng-table.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+
+
+    <script src="~/Scripts/ng-table.src.js"></script>
+
+    <script src="~/Scripts/Paginacion/Paginacion.js"></script>
+
+</head>
+<body>
+
+    <div ng-app="MyApp" ng-controller="MyController">
+        
+        <button class="btn btn-primary" ng-click="CargarDatos()">
+            Cargar
+        </button>
+
+        <hr/>
+
+        <table class="table" show-filter="true" ng-table="tableParams">
+            <tbody>
+                <tr ng-repeat="d in searched = (file) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">
+                    <td data-title="'Id'" sortable="'Id'">{{d.Id}}</td>
+                    <td data-title="'Nombre'" sortable="'Nombre'">{{d.Nombre}}</td>
+                    <td data-title="'Descripcion'" sortable="'Descripcion'">{{d.Descripcion}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+</div>
+
+</body>
+</html>

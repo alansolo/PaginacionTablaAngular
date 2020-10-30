@@ -1,0 +1,79 @@
+﻿!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/Scripts/Paginacion/Pagina.js"></script>
+
+</head>
+<body>
+
+    <div ng-app="MyApp" ng-controller="MyController">
+
+        <button class="btn btn-primary" ng-click="CargarDatos()">
+            Cargar
+        </button>
+
+        <div class="row">
+            <div class="col-sm-2 pull-left">
+                <label>PageSize:</label>
+                <select ng-model="data_limit" class="form-control">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                </select>
+            </div>
+            <div class="col-sm-6 pull-right">
+                <label>Search:</label>
+                <input type="text" ng-model="search" ng-change="filter()" placeholder="Search" class="form-control" />
+            </div>
+        </div>
+        <div class="row" ng-show="filter_data > 0">
+            <table ng-table="tableParams" class="table" show-filter="true">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in searched = (file | filter:search | orderBy : base :reverse) | beginning_data:(current_grid-1)*data_limit | limitTo:data_limit">
+                        <td>
+                            {{data.Id}}
+                        </td>
+                        <td>
+                            {{data.Nombre}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-12" ng-show="filter_data == 0">
+            <div class="col-md-12">
+                <h4>No records found..</h4>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6 pull-left">
+                <h5>Showing {{ searched.length }} of {{ entire_user}} entries</h5>
+            </div>
+            <div class="col-md-6" ng-show="filter_data > 0">
+                <div pagination="" page="current_grid" on-select-page="page_position(page)" boundary-links="true" total-items="filter_data" items-per-page="data_limit" class="pagination-small pull-right" previous-text="&laquo;" next-text="&raquo;"></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
